@@ -60,14 +60,12 @@ body{
   border-radius:50%;
 }
 
-.catalogo{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
-  gap:20px;
-  padding:30px;
+  .catalogo{
+  padding: 0;
   max-width:1000px;
   margin:auto;
 }
+
 
 .categoria{ /* Estilo para os cards de categoria em catalogo.html */
   display:flex;
