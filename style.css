@@ -1,0 +1,100 @@
+/* style.css */
+
+body{
+  margin:0;
+  font-family:'Montserrat', sans-serif;
+  background:#ffffff;
+  color:black;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+
+.container{
+  text-align:center;
+  width: 90%; /* Ajustado para ser mais flexível */
+  max-width:300px;
+}
+
+.logo{
+  width:120px;
+  border-radius:50%;
+  margin-bottom:15px;
+}
+
+h1{
+  margin:5px 0;
+}
+
+p{
+  font-size:14px;
+  color:#5c5c5c;
+  margin-bottom:25px;
+}
+
+.links{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+
+.botao{
+  display:block;
+  background:rgb(0, 0, 0);
+  backdrop-filter: blur(5px);
+  border:1px solid rgba(85, 85, 85, 0.479);
+  color:rgb(255, 255, 255);
+  padding:15px;
+  border-radius:10px;
+  text-decoration:none;
+  font-weight:bold;
+  transition:0.3s;
+}
+
+.botao span{
+    font-family:  'Montserrat', sans-serif;
+}
+
+.botao:hover{
+  background:rgba(255,255,255,0.25);
+  color:black;
+}
+
+.a, button{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.botao:active{
+  transform:scale(0.97);
+}
+
+
+.whatsapp{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 30px;
+  text-decoration: none;
+  z-index: 9999;
+  animation:pulse 2s infinite;
+}
+
+.whatsapp{
+  animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}

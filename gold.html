@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="catalogo.css"> <!-- Certifique-se que este link está correto -->
+<title>Gold</title>
+</head>
+
+<body>
+
+<header class="topo">
+  <h1>Gold</h1>
+
+  <div class="carrinho-icone" onclick="abrirCarrinho()">
+    <i class="fa-solid fa-cart-shopping"></i>
+    <span id="contador">0</span>
+  </div>
+
+  <a href="catalogo.html" class="voltar">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
+</header>
+
+<!-- ESTA É A SEÇÃO CRÍTICA PARA OS PRODUTOS E O SPINNER -->
+<section class="catalogo" id="produtos">
+  <!-- Este div será mostrado enquanto os produtos carregam -->
+  <div id="loading-spinner" style="display: none; text-align: center; padding: 20px;">
+    <i class="fa-solid fa-spinner fa-spin fa-2x"></i> <!-- Ícone de spinner do Font Awesome -->
+    <p>Carregando produtos...</p>
+  </div>
+  <!-- OS PRODUTOS SERÃO INJETADOS AQUI DENTRO, EM UM DIV COM id="produtos-listagem" -->
+</section>
+
+<!-- Link do WhatsApp -->
+<a href="https://wa.me/5581984376945" class="whatsapp" target="_blank">
+  <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<!-- Script para carregar produtos do Firebase e funcionalidades do carrinho -->
+<script type="module">
+  // Importa a função carregarGravatas do módulo firebase-loja.js
+  import { carregarGravatas } from "./firebase-loja.js";
+  // Importa o script com as funções globais para o carrinho e navegação
+  import "./script.js"; // Apenas importa para que as funções globais sejam registradas
+
+  // Carrega apenas produtos da categoria "gold" ao carregar a página
+  document.addEventListener("DOMContentLoaded", () => {
+    carregarGravatas("gold");
+  });
+</script>
+
+</body>
+</html>

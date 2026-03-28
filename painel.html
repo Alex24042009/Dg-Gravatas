@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin - Gerenciar Produtos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css"> <!-- Link para o arquivo CSS de admin -->
+
+</head>
+
+<body>
+
+<div class="box">
+  <button class="voltar-site" onclick="voltarPagina()">⬅ Voltar para o site</button>
+  <button style="background: #dc3545; margin-bottom: 15px;" onclick="logoutAdmin()">Sair</button>
+
+  <h2>Adicionar nova gravata</h2>
+
+  <input id="nome" placeholder="Nome da gravata">
+  <input type="number" id="preco" placeholder="Preço (ex: 59.90)" step="0.01">
+  <input type="file" id="imagemInput" accept="image/*">
+
+  <select id="categoria">
+    <option value="gold">Gold</option>
+    <option value="festividade">Festividade</option>
+  </select>
+
+  <img id="preview" style="display:none">
+
+  <button onclick="salvarProduto()">Adicionar Produto</button>
+</div>
+
+<hr>
+
+<h2>Produtos cadastrados</h2>
+<div id="listaAdmin">
+  <p style="text-align: center;">Carregando produtos...</p>
+</div>
+
+<!-- Importa o script.js para funções globais como voltarPagina() -->
+<script src="script.js"></script>
+
+<!-- Script do Painel Administrativo com Firebase Firestore e Auth -->
+<script type="module">
+  // Importa as instâncias de Firebase Auth, Firestore e app
+  import { app, db, auth } from "./firebase.js";
+  import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-firestore.js";
+  import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+  /* 🔐 Proteção admin: VERIFICA O ESTADO DA AUTENTICAÇÃO */
+  let currentUser = null;
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      // Se não estiver logado, redireciona para a página de login
+      console.log("Usuário não autenticado, redirecionando para login.");
+      window.location.href = "admin.html";
+    } else {
+      currentUser = user;
+      console.log("Usuário autenticado:", user.email);
+      mostrarProdutosAdmin(); // Se estiver logado, exibe os produtos
+    }
+  });
+
+  // Função para fazer logout
+  window.logoutAdmin = async function() {
+    try {
+      await signOut(auth);
+      console.log("Logout bem-sucedido.");
+      window.location.href = "admin.html"; // Redireciona para a página de login
+    } catch (error) {
+      console.error("Erro ao fazer logout:", error);
+      alert("Erro ao fazer logout. Tente novamente.");
+    }
+  }
+
+
+  let imagemBase64 = "";
+
+  /* 📷 PREVIEW DA IMAGEM */
+  document.getElementById("imagemInput").addEventListener("change", function(){
+    const file = this.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e){
+        imagemBase64 = e.target.result;
+        const preview = document.getElementById("preview");
+        preview.src = imagemBase64;
+        preview.style.display = "block";
+      }
+      reader.readAsDataURL(file);
+    } else {
+      imagemBase64 = "";
+      document.getElementById("preview").style.display = "none";
+      document.getElementById("preview").src = "";
+    }
+  });
+
+  /* ➕ SALVAR PRODUTO NO FIRESTORE */
+  window.salvarProduto = async function(){
+    if (!currentUser) {
+      alert("Você precisa estar logado para adicionar produtos.");
+      window.location.href = "admin.html";
+      return;
+    }
+
+    const nome = document.getElementById("nome").value.trim();
+    const precoInput = document.getElementById("preco").value;
+    const categoria = document.getElementById("categoria").value;
+
+    if(nome === "" || precoInput === "" || imagemBase64 === ""){
+      alert("Por favor, preencha todos os campos e selecione uma imagem.");
+      return;
+    }
+
+    const preco = parseFloat(precoInput);
+    if (isNaN(preco) || preco <= 0) {
+      alert("Por favor, insira um preço válido (número maior que zero).");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "gravatas"), {
+        nome: nome,
+        preco: preco,
+        imagem: imagemBase64,
+        categoria: categoria,
+        adicionadoPor: currentUser.email, // Adiciona quem adicionou o produto (para auditoria)
+        timestamp: new Date() // Adiciona um timestamp para ordenação
+      });
+      alert("Produto salvo na nuvem ☁️");
+      // Limpa o formulário e recarrega a lista de produtos
+      document.getElementById("nome").value = "";
+      document.getElementById("preco").value = "";
+      document.getElementById("imagemInput").value = ""; // Limpa o input de arquivo
+      document.getElementById("preview").style.display = "none";
+      document.getElementById("preview").src = "";
+      imagemBase64 = ""; // Limpa a imagem base64
+      mostrarProdutosAdmin();
+    } catch (error) {
+      console.error("Erro ao salvar produto:", error);
+      alert("Erro ao salvar produto. Verifique suas regras de segurança ou conexão.");
+    }
+  }
+
+  /* 📦 LISTAR PRODUTOS */
+  async function mostrarProdutosAdmin(){
+    const lista = document.getElementById("listaAdmin");
+    if (!lista) return;
+    lista.innerHTML = '<p style="text-align: center;">Carregando produtos...</p>'; // Mensagem de carregamento
+
+    try {
+      // Consulta os produtos ordenando pelo timestamp (mais recente primeiro)
+      const q = query(collection(db, "gravatas"), orderBy("timestamp", "desc"));
+      const querySnapshot = await getDocs(q);
+
+      lista.innerHTML = ''; // Limpa a mensagem de carregamento
+      if (querySnapshot.empty) {
+          lista.innerHTML = '<p style="text-align: center;">Nenhum produto cadastrado.</p>';
+          return;
+      }
+
+      querySnapshot.forEach((docu) => {
+        const produto = docu.data();
+
+        lista.innerHTML += `
+        <div class="itemAdmin">
+          <img src="${produto.imagem}" alt="${produto.nome}">
+          <div>
+            <b>${produto.nome}</b><br>
+            R$ ${produto.preco ? produto.preco.toFixed(2).replace('.', ',') : 'N/A'}
+            ${produto.adicionadoPor ? `<p style="font-size: 11px; color: #999;">Adicionado por: ${produto.adicionadoPor}</p>` : ''}
+          </div>
+          <button class="excluir" onclick="excluirProduto('${docu.id}')">Excluir</button>
+        </div>`;
+      });
+    } catch (error) {
+      console.error("Erro ao listar produtos:", error);
+      lista.innerHTML = '<p style="color: red; text-align: center;">Erro ao carregar produtos. Tente novamente.</p>';
+    }
+  }
+
+  /* 🗑️ EXCLUIR PRODUTO */
+  window.excluirProduto = async function(id){
+    if (!currentUser) {
+      alert("Você precisa estar logado para excluir produtos.");
+      window.location.href = "admin.html";
+      return;
+    }
+
+    if (confirm("Tem certeza que deseja excluir este produto?")) {
+      try {
+        await deleteDoc(doc(db, "gravatas", id)); // Exclui da coleção "gravatas"
+        alert("Produto excluído com sucesso!");
+        mostrarProdutosAdmin(); // Recarrega a lista
+      } catch (error) {
+        console.error("Erro ao excluir produto:", error);
+        alert("Erro ao excluir produto. Verifique suas regras de segurança ou conexão.");
+      }
+    }
+  }
+
+  // A função voltarPagina() já é globalmente acessível via script.js
+</script>
+
+</body>
+</html>
