@@ -17,6 +17,7 @@ body {
   justify-content:center; /* Centraliza o h1 */
   align-items:center;
   position: relative; /* Para posicionar o botão voltar */
+  box-sizing: border-box;
 }
 
 .topo h1 {
