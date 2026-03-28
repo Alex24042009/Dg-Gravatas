@@ -1,0 +1,154 @@
+/* admin.css */
+
+body{
+  font-family: 'Montserrat', sans-serif; /* Usando a fonte que você especificou */
+  background: #f5f5f5; /* Um fundo claro para as páginas admin */
+  color: #333; /* Cor de texto padrão */
+  margin: 0;
+  padding: 30px;
+  display: flex;
+  flex-direction: column; /* Para organizar elementos verticalmente */
+  align-items: center; /* Centraliza horizontalmente */
+  min-height: 100vh; /* Garante que o body ocupe a altura total da tela */
+  box-sizing: border-box; /* Inclui padding na largura/altura total */
+}
+
+.box{
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 100%; /* Ocupa a largura máxima disponível dentro do max-width */
+  margin-bottom: 20px; /* Espaçamento entre a caixa e outros elementos */
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-sizing: border-box;
+}
+
+h2{
+  text-align: center;
+  margin-top: 0;
+  color: #333;
+}
+
+input, select{
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box; /* Importante para o padding não expandir o elemento */
+  font-family: 'Montserrat', sans-serif;
+}
+
+button{
+  width: 100%;
+  padding: 14px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  transition: background 0.3s ease;
+}
+
+button:hover{
+  background: #333;
+}
+
+button.voltar-site{ /* Botão "Voltar para o site" */
+  background: #999;
+  margin-bottom: 15px;
+}
+
+button.voltar-site:hover{
+  background: #777;
+}
+
+img#preview{ /* Imagem de preview no painel */
+  width: 100%;
+  height: auto; /* Mantém proporção */
+  max-height: 200px; /* Limita altura para não ocupar muito espaço */
+  object-fit: contain; /* Garante que a imagem inteira seja visível */
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid #eee;
+  display: none; /* Por padrão, oculto */
+}
+
+hr{
+  width: 100%;
+  max-width: 500px;
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 30px 0;
+}
+
+#listaAdmin{ /* Container da lista de produtos no painel */
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.itemAdmin{ /* Item individual na lista de produtos do painel */
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.itemAdmin img{
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0; /* Impede que a imagem encolha */
+}
+
+.itemAdmin div{ /* Container para nome e preço */
+  flex-grow: 1; /* Permite que o texto ocupe o espaço restante */
+  text-align: left;
+}
+
+.itemAdmin b{
+  display: block; /* Nome em uma linha */
+  font-size: 15px;
+  color: #333;
+}
+
+.itemAdmin p{
+  margin: 0;
+  font-size: 13px;
+  color: #666;
+}
+
+button.excluir{
+  background: #e74c3c;
+  width: auto; /* Permite que o botão se ajuste ao conteúdo */
+  padding: 8px 12px;
+  margin-left: auto; /* Empurra para a direita */
+  font-size: 14px;
+}
+
+button.excluir:hover{
+  background: #c0392b;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  body{
+    padding: 15px;
+  }
+  .box, #listaAdmin{
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

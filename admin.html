@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login Admin - Dg Gravatas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css"> <!-- Link para o arquivo CSS de admin -->
+</head>
+
+<body>
+
+<div class="box">
+        <button onclick="voltarPagina()" style="background:#999;margin-bottom:15px;">
+⬅ Voltar para o site
+</button>
+<h2>Área do Administrador</h2>
+
+  <input type="email" id="email" placeholder="Login">
+  <input type="password" id="password" placeholder="Senha">
+
+  <button onclick="loginAdmin()">Entrar</button>
+</div>
+
+<!-- Importa o script.js para funções globais como voltarPagina() -->
+<script src="script.js"></script>
+
+<!-- Script para a lógica de login com Firebase Auth -->
+<script type="module">
+  // Importa as instâncias de Firebase Auth e app
+  import { auth } from "./firebase.js";
+  import { signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-auth.js";
+
+  // Torna a função loginAdmin globalmente acessível
+  window.loginAdmin = async function(){
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+      alert("Por favor, preencha o e-mail e a senha.");
+      return;
+    }
+
+    try {
+      // Tenta fazer login com e-mail e senha no Firebase Auth
+      await signInWithEmailAndPassword(auth, email, password);
+      // Se o login for bem-sucedido, redireciona para o painel
+      console.log("Login bem-sucedido!");
+      window.location.href = "painel.html";
+    } catch (error) {
+      // Trata erros de login
+      console.error("Erro de login:", error.code, error.message);
+      let errorMessage = "Erro no login. Verifique suas credenciais.";
+      if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+        errorMessage = "E-mail ou senha inválidos.";
+      } else if (error.code === 'auth/invalid-email') {
+        errorMessage = "O formato do e-mail é inválido.";
+      }
+      alert(errorMessage);
+    }
+  }
+
+  // A função voltarPagina() já é globalmente acessível via script.js
+</script>
+
+</body>
+</html>
+
