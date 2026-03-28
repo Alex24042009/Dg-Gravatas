@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<title>Carrinho</title>
+
+<link rel="stylesheet" href="carrinho.css">
+
+</head>
+
+<body>
+
+<header class="topo">
+
+<h1>Seu Carrinho</h1>
+
+<button class="voltar" onclick="voltarPagina()">
+<i class="fa-solid fa-arrow-left"></i></button>
+</a>
+
+</header>
+
+<div id="listaCarrinho"></div>
+
+<div class="rodape">
+
+<h2 id="total"></h2>
+
+<button class="finalizar" onclick="finalizarCompra()">
+Finalizar Compra
+</button>
+
+</div>
+
+<!-- Carrega o script.js com as funções globais -->
+<script src="script.js"></script>
+<script type="module">
+  // Apenas importa para garantir que as funções globais estejam disponíveis.
+  // A função renderizarCarrinho é chamada pelo DOMContentLoaded em script.js
+  // mas como este script está no final, é melhor chamar explicitamente aqui
+  // para garantir que a renderização ocorra após a importação.
+  import "./script.js";
+  document.addEventListener("DOMContentLoaded", renderizarCarrinho);
+</script>
+
+</body>
+
+</html>

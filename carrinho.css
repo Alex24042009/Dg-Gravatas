@@ -1,0 +1,178 @@
+/* carrinho.css */
+
+body {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: #f5f5f5;
+  /* Adicione esta linha: */
+  padding-bottom: 100px; /* Ajuste este valor se necessário */
+}
+
+
+.topo{
+  background:#ffffff;
+  color:rgb(0, 0, 0);
+  padding:15px;
+  display:flex;
+  justify-content:center; /* Centraliza o h1 */
+  align-items:center;
+  position: relative; /* Para posicionar o botão voltar */
+}
+
+.topo h1 {
+    margin: 0;
+}
+
+.voltar{
+  position:absolute;
+  left:20px;
+  top:50%;
+  transform:translateY(-50%);
+  background:none; /* Remove fundo */
+  border:none;
+  font-size:22px;
+  cursor:pointer;
+  padding:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: black; /* Cor do ícone */
+}
+
+#listaCarrinho{
+  padding:15px;
+  max-width: 600px; /* Limita a largura para melhor leitura */
+  margin: 0 auto; /* Centraliza */
+}
+
+.item{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column; /* Organiza conteúdo verticalmente */
+  gap: 10px;
+}
+
+.produtoInfo{
+  display:flex;
+  gap:10px;
+  align-items: center;
+}
+
+.imagemProduto{
+  width:70px;
+  height:70px;
+  object-fit:cover;
+  border-radius:6px;
+  margin-right:10px;
+}
+
+.preco{
+  color:#000000;
+  font-weight:bold;
+}
+
+.controle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-top:10px;
+  justify-content: space-between; /* Espalha os elementos */
+}
+
+.controle button{
+  width:30px;
+  height:30px;
+  border:none;
+  background:#000000;
+  color:white;
+  border-radius:5px;
+  cursor:pointer;
+  flex-shrink: 0; /* Impede que o botão encolha */
+}
+
+.controle span{
+  font-weight: bold;
+}
+
+.subtotal{
+  margin-left: auto; /* Empurra para a direita */
+  font-weight:bold;
+  color: #333;
+}
+
+.remover{
+  margin-top:10px;
+  background:#e74c3c; /* Cor de exclusão */
+  color:white;
+  border:none;
+  padding:8px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  align-self: flex-start; /* Alinha à esquerda */
+}
+
+.remover:hover{
+  background: #c0392b;
+}
+
+.rodape{
+  position:fixed;
+  bottom:0;
+  width:100%;
+  background:white;
+  padding:15px;
+  box-shadow:0 -2px 6px rgba(0,0,0,0.1);
+  text-align: center;
+  box-sizing: border-box; /* Inclui padding na largura */
+}
+
+.rodape h2{
+    margin: 0 0 10px 0;
+    font-size: 1.3em;
+    color: #000;
+}
+
+.finalizar{
+  width:100%;
+  padding:15px;
+  background:#000000;
+  color:rgb(255, 255, 255);
+  border:none;
+  border-radius:10px;
+  font-size:16px;
+  cursor:pointer;
+  transition: background 0.3s;
+}
+
+.finalizar:hover{
+    background: #333;
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  #listaCarrinho{
+    padding: 10px;
+  }
+  .item{
+    padding: 10px;
+  }
+  .rodape{
+    padding: 10px;
+  }
+  .controle{
+    flex-wrap: wrap; /* Permite que os elementos quebrem a linha */
+  }
+  .subtotal{
+    flex-basis: 100%; /* Ocupa toda a largura em telas pequenas */
+    text-align: right;
+    margin-top: 5px;
+  }
+  .remover{
+    width: 100%;
+    align-self: center;
+  }
+}

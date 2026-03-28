@@ -1,0 +1,224 @@
+/* catalogo.css */
+
+body{
+  margin:0;
+  font-family:'Montserrat', sans-serif;
+  background:#f5f5f5; /* Fundo mais claro para os catálogos */
+}
+
+.topo{
+  position: relative;
+  display:flex;
+  align-items: center;
+  padding:20px;
+  background:#ffffff;
+  color:rgb(0, 0, 0);
+  justify-content: center; /* Centraliza o h1 */
+}
+
+.topo h1{
+  margin:0; /* Remove margem padrão */
+}
+
+/* Botão voltar para o catálogo ou index */
+.voltar{
+  position:absolute;
+  left:20px; /* Alinha à esquerda */
+  top:50%; /* Centraliza verticalmente */
+  transform:translateY(-50%);
+  background:rgb(233, 233, 233);
+  color:rgb(0, 0, 0);
+  border:none;
+  padding:8px 14px;
+  border-radius:6px;
+  cursor:pointer;
+  display:flex; /* Para alinhar o ícone */
+  align-items:center;
+  justify-content:center;
+  text-decoration: none; /* Remove sublinhado do link */
+  font-size: 16px; /* Tamanho do ícone */
+}
+
+.carrinho-icone{
+  position:absolute;
+  right:20px;
+  top:50%; /* Centraliza verticalmente */
+  transform:translateY(-50%);
+  font-size:22px;
+  cursor:pointer;
+  color:black; /* Cor do ícone */
+}
+
+.carrinho-icone span{
+  position:absolute;
+  top:-8px;
+  right:-10px;
+  background:red;
+  color:white;
+  font-size:12px;
+  padding:3px 6px;
+  border-radius:50%;
+}
+
+.catalogo{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+  gap:20px;
+  padding:30px;
+  max-width:1000px;
+  margin:auto;
+}
+
+.categoria{ /* Estilo para os cards de categoria em catalogo.html */
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:120px;
+  background:white;
+  border-radius:12px;
+  text-decoration:none;
+  color:black;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  transition:transform 0.3s, background 0.3s;
+}
+
+.categoria:hover{
+  transform:translateY(-5px);
+  background:#f3f3f3;
+}
+
+.categoria h2{
+  margin:0;
+  font-size:18px;
+}
+
+.categoria p{
+  font-size:13px;
+  color:#666;
+}
+
+/* Estilo para os cards de produto em gold.html, festividade.html */
+.produto{
+  background:white;
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+  box-shadow:0 5px 15px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Para empurrar o botão para baixo */
+}
+
+.produto img.foto{ /* Especifica a imagem dentro do card de produto */
+  width:100%;
+  height: 450px; /* Altura fixa para as imagens */
+  object-fit: cover; /* Recorta a imagem para preencher o espaço */
+  border-radius:8px;
+  margin-bottom: 10px;
+}
+
+.produto h3{
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1.1em;
+}
+
+.produto p{
+  font-size: 0.9em;
+  color: #333;
+  font-weight: bold;
+}
+
+/* === NOVO DESIGN PARA O BOTÃO "ADICIONAR AO CARRINHO" === */
+.produto button.comprar{
+  background: linear-gradient(to right, #000000, #17181a); /* Gradiente de azul para um visual moderno */
+  color: rgb(141, 139, 139);
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px; /* Arredondamento suave */
+  cursor: pointer;
+  margin-top: auto; /* Garante que o botão fique na parte inferior do card */
+  font-size: 1em;
+  font-weight: bold;
+  text-transform: uppercase; /* Texto em maiúsculas para destaque */
+  letter-spacing: 0.5px; /* Leve espaçamento entre as letras */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra sutil para profundidade */
+  transition: all 0.3s ease; /* Transição suave para todas as propriedades */
+}
+
+.produto button.comprar:hover{
+  background: linear-gradient(to right, #ffffff, #686869); /* Gradiente mais escuro no hover */
+  transform: translateY(-2px); /* Efeito de "elevação" */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25); /* Sombra mais pronunciada no hover */
+}
+
+.produto button.comprar:active{
+  transform: translateY(0); /* Volta à posição original ao clicar */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra mais suave ao clicar */
+  background: #000000; /* Cor sólida ao clicar para feedback */
+}
+
+.imagemProduto{
+
+width: 70px;
+height:70px;
+
+object-fit:cover;
+
+border-radius:6px;
+
+margin-right:10px;
+
+}
+/* ========================================================= */
+
+
+/* Estilo para o botão do WhatsApp */
+.whatsapp{
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 30px;
+  text-decoration: none;
+  z-index: 9999;
+  animation:pulse 2s infinite;
+}
+
+.whatsapp:active{
+  transform:scale(0.97);
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+/* Responsividade básica */
+@media (max-width: 600px) {
+  .catalogo{
+    padding: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Mais compacto em telas menores */
+  }
+  .topo{
+    padding: 10px;
+  }
+  .voltar, .carrinho-icone{
+    font-size: 20px;
+    padding: 5px 10px;
+  }
+  .whatsapp{
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+  }
+}
