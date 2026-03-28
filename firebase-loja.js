@@ -50,6 +50,8 @@ export async function carregarGravatas(categoria) {
         const produto = doc.data();
         const produtoDiv = document.createElement("div");
         produtoDiv.classList.add("produto");
+         produtoDiv.style.minWidth = '200px'; // Garante que o card tenha largura mínima
+                produtoDiv.style.flexShrink = '0';   // Impede que o card encolha
         // --- NOVOS ESTILOS PARA GARANTIR QUE OS ITENS NÃO ENCOLHAM ---
         produtoDiv.style.minWidth = '200px'; // Garante uma largura mínima para cada card
         produtoDiv.style.flexShrink = '0'; // Impede que o item encolha abaixo do min-width
