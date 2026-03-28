@@ -61,7 +61,11 @@ body{
 }
 
   .catalogo{
-  padding: 0;
+ display:grid; /* <-- RESTAURAR esta linha */
+  grid-template-columns:repeat(auto-fit, minmax(200px,1fr)); /* <-- RESTAURAR esta linha */
+  gap:20px; /* <-- RESTAURAR esta linha */
+  padding:30px; /* <-- RESTAURAR esta linha */
+  max-width:1000px;
   max-width:1000px;
   margin:auto;
 }
